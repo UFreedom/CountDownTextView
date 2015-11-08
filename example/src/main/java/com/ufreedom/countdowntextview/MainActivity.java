@@ -1,5 +1,6 @@
 package com.ufreedom.countdowntextview;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
@@ -16,12 +17,16 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private AnalogAdapter analogAdapter;
+    private Random random;
+            
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        random = new Random();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
         
 
@@ -29,12 +34,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<AnalogData> analogDatas =  new ArrayList<>();
         List<String> pics = Arrays.asList(Analog.getPics());
-        Random random = new Random();
                 
         for (String pic: pics){
             AnalogData  analogData = new AnalogData();
             analogData.pic = pic;
-            analogData.schedlueTime = 1000 * 60 * 60 * (random.nextInt(6) + 1) + SystemClock.elapsedRealtime();
+            analogData.schedlueTime = getRandomTime();
             analogDatas.add(analogData);
         }
         BaseItemDecoration baseItemDecoration = new BaseItemDecoration(32,0,16,1);
@@ -43,6 +47,14 @@ public class MainActivity extends AppCompatActivity {
         analogAdapter = new AnalogAdapter(analogDatas);
         recyclerView.setAdapter(analogAdapter);
 
+    }
+    
+    private long getRandomTime(){
+        
+        long seconds = 1000 * (random.nextInt(10) + 1);
+        long minute = 1000 * 60 * (random.nextInt(10) + 1); 
+        long hour = 1000 * 60 * 60 * (random.nextInt(10) + 1);
+        return SystemClock.elapsedRealtime() + hour + minute + seconds;
     }
     
 }
