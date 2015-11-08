@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
- * Author SunMeng
+ * Author UFreedom
  * Date : 2015 十月 27
  */
 public  class BaseItemDecoration extends RecyclerView.ItemDecoration {

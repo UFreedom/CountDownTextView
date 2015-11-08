@@ -9,18 +9,21 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.common.ResizeOptions;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.ufreedom.CountDownTextView;
 
 /**
- * Author SunMeng
+ * Author UFreedom
  * Date : 2015 十月 29
  */
 public class AnalogHolder extends BaseViewHolder<AnalogData> {
 
-    SimpleDraweeView simpleDraweeView;
+    private SimpleDraweeView simpleDraweeView;
+    private CountDownTextView countDownTextView;
 
     public AnalogHolder(View itemView) {
         super(itemView);
         simpleDraweeView = (SimpleDraweeView) itemView.findViewById(R.id.simpleDraweeView);
+        countDownTextView = (CountDownTextView) itemView.findViewById(R.id.countDownTextView);
     }
 
     @Override
@@ -35,5 +38,21 @@ public class AnalogHolder extends BaseViewHolder<AnalogData> {
                 .setAutoPlayAnimations(true)
                 .build();
         simpleDraweeView.setController(draweeController);
+        countDownTextView.setRelativeScheduledTime(object.schedlueTime);
+        countDownTextView.setAutoShowText(true);
+        countDownTextView.start();
+        countDownTextView.addCountDownCallback(new CountDownTextView.CountDownCallback() {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                
+            }
+
+            @Override
+            public void onFinish() {
+                countDownTextView.setText("00:00:00");
+            }
+        });
+        
+        
     }
 }
