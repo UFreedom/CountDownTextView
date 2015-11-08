@@ -2,6 +2,8 @@
 A simple widget and easy to use.
 
 ###Simple
+------
+
 ![demo](./screenshots/demo.gif)
 
 ###Usage
@@ -29,6 +31,7 @@ setPrefixText()
 set the prefix text "倒数计时 : 12:23:45 "
 
 ###Callback
+------
 
 ``` java
     public interface CountDownCallback {
