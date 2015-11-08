@@ -18,7 +18,7 @@ countDownTextView.setRelativeScheduledTime(relativeTime);
 countDownTextView.setAutoShowText(true);
 countDownTextView.start();
 
-```
+
 
 setAutoShowText()
 If true，CountDownTextView auto show the time,the formater is "12:23:45"(Hour:Minute:Seconds)
@@ -45,4 +45,4 @@ set the prefix text "倒数计时 : 12:23:45 "
         void onFinish();
         
     }
-``
+
