@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#66000000">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/simpleDraweeView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        fresco:actualImageScaleType="focusCrop"
+        fresco:fadeDuration="200"
+        fresco:viewAspectRatio="1.33" />
+
+
+    <LinearLayout
+        android:id="@+id/layCountDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/player_yugao_bg"
+        android:paddingBottom="8dp"
+        android:paddingLeft="12dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingRight="12dp"
+        android:paddingTop="8dp">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:layout_gravity="center_horizontal"
+            android:text="Remains"/>
+
+        <com.ufreedom.CountDownTextView
+            android:id="@+id/countDownTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="00:00:00"
+            android:textColor="@android:color/white"
+            android:textSize="50dp" />
+    </LinearLayout>
+
+</RelativeLayout>
