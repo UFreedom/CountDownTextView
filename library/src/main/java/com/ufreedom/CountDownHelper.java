@@ -3,19 +3,18 @@ package com.ufreedom;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
-
 /**
+ * Helper Class that implements a simple CountDown.
+ * <p>You can give it a start time in the {@link SystemClock#elapsedRealtime} timebase,
+ * and it counts down from that.
+ * 
  * Author SunMeng
  * Date : 2015 十一月 02
  * The help to CountDown
  */
 public abstract  class CountDownHelper  {
 
-    public static final int TIME_ABSOLUTE = 0;
-
-    public static final int TIME_RELATIVE = 1;
-
-    private int mTimeMode = TIME_RELATIVE ;
+    
 
     /**
      * Millis since epoch when alarm should stop.
@@ -26,10 +25,7 @@ public abstract  class CountDownHelper  {
      * The interval in millis that the user receives callbacks
      */
     private final long mCountdownInterval;
-
-
-    private long mStopTimeInFuture;
-
+    
 
     /**
      * boolean representing if the timer was cancelled
@@ -47,17 +43,11 @@ public abstract  class CountDownHelper  {
      * @param countDownInterval The interval along the way to refresh date
      *  
      */
-    public CountDownHelper(long millisInFuture, long countDownInterval,int mode) {
+    public CountDownHelper(long millisInFuture, long countDownInterval) {
         mMillisInFuture = millisInFuture;
         mCountdownInterval = countDownInterval;
-        mTimeMode = mode;
     }
-
-
-    public void setTimeMode(int mTimeMode) {
-        this.mTimeMode = mTimeMode;
-    }
-
+    
     /**
      * Callback fired on regular interval.
      * @param millisUntilFinished The amount of time until finished.
@@ -103,13 +93,34 @@ public abstract  class CountDownHelper  {
                     return;
                 }
 
-                final long millisLeft = getTimeLeft(mMillisInFuture);
+             /*   final long millisLeft = getTimeLeft(mMillisInFuture);
                 if (millisLeft <= 0){
                     onFinish();
                     removeMessages(UPDATE_TIME);
                 }else {
                     onTick(millisLeft);
                     sendEmptyMessageDelayed(UPDATE_TIME, mCountdownInterval);
+                }*/
+
+                final long millisLeft = mMillisInFuture - SystemClock.elapsedRealtime();
+
+                if (millisLeft <= 0) {
+                    onFinish();
+                } else if (millisLeft < mCountdownInterval) {
+                    // no tick, just delay until done
+                    sendMessageDelayed(obtainMessage(UPDATE_TIME), millisLeft);
+                } else {
+                    long lastTickStart = SystemClock.elapsedRealtime();
+                    onTick(millisLeft);
+
+                    // take into account user's onTick taking time to execute
+                    long delay = lastTickStart + mCountdownInterval - SystemClock.elapsedRealtime();
+
+                    // special case: user's onTick took more than interval to
+                    // complete, skip to next interval
+                    while (delay < 0) delay += mCountdownInterval;
+
+                    sendMessageDelayed(obtainMessage(UPDATE_TIME), delay);
                 }
 
             }
@@ -117,9 +128,9 @@ public abstract  class CountDownHelper  {
     };
 
 
-    private long getTimeLeftInAbsolute(long reqMilliseconds){
-        /*Calendar nowCalendar = Calendar.getInstance();
-        nowCalendar.setTimeInMillis();*/
+/*    private long getTimeLeftInAbsolute(long reqMilliseconds){
+        *//*Calendar nowCalendar = Calendar.getInstance();
+        nowCalendar.setTimeInMillis();*//*
         return reqMilliseconds - System.currentTimeMillis();
     }
     
@@ -129,7 +140,7 @@ public abstract  class CountDownHelper  {
     
     private long getTimeLeft(long reqMilliseconds){
         return mTimeMode == TIME_ABSOLUTE ? getTimeLeftInAbsolute(reqMilliseconds) : getTimeLeftInRelative(reqMilliseconds);
-    }
+    }*/
     
     
 }

@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         
         long seconds = 1000 * (random.nextInt(10) + 1);
         long minute = 1000 * 60 * (random.nextInt(10) + 1); 
-        long hour = 1000 * 60 * 60 * (random.nextInt(10) + 1);
+        long hour = 1000 * 60 * 60 * (/*random.nextInt(10)*/10 + 1);
         return SystemClock.elapsedRealtime() + hour + minute + seconds;
     }
     

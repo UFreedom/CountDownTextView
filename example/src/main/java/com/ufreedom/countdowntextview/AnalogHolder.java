@@ -38,17 +38,17 @@ public class AnalogHolder extends BaseViewHolder<AnalogData> {
                 .setAutoPlayAnimations(true)
                 .build();
         simpleDraweeView.setController(draweeController);
-        countDownTextView.setRelativeScheduledTime(object.schedlueTime);
+        countDownTextView.setTimeInFuture(object.schedlueTime);
         countDownTextView.setAutoShowText(true);
         countDownTextView.start();
         countDownTextView.addCountDownCallback(new CountDownTextView.CountDownCallback() {
             @Override
-            public void onTick(long millisUntilFinished) {
+            public void onTick(CountDownTextView countDownTextView, long millisUntilFinished) {
                 
             }
 
             @Override
-            public void onFinish() {
+            public void onFinish(CountDownTextView countDownTextView) {
                 countDownTextView.setText("00:00:00");
             }
         });
