@@ -39,7 +39,7 @@ public class AnalogHolder extends BaseViewHolder<AnalogData> {
                 .build();
         simpleDraweeView.setController(draweeController);
         countDownTextView.setTimeInFuture(object.schedlueTime);
-        countDownTextView.setAutoShowText(true);
+        countDownTextView.setAutoDisplayText(true);
         countDownTextView.start();
         countDownTextView.addCountDownCallback(new CountDownTextView.CountDownCallback() {
             @Override
