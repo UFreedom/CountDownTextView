@@ -120,7 +120,7 @@ public class CountDownTextView extends TextView {
      * is auto show time
      * @param isAutoShowText
      */
-    public void setAutoShowText(boolean isAutoShowText) {
+    public void setAutoDisplayText(boolean isAutoShowText) {
         this.isAutoShowText = isAutoShowText;
     }
 
