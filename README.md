@@ -1,5 +1,5 @@
 # CountDownTextView
-A simple widget and easy to use.
+A simple countdown widget and easy to use.
 
 ###Simple
 ------
