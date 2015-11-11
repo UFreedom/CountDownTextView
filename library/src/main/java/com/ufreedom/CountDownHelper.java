@@ -8,7 +8,7 @@ import android.os.SystemClock;
  * <p>You can give it a start time in the {@link SystemClock#elapsedRealtime} timebase,
  * and it counts down from that.
  * 
- * Author SunMeng
+ * Author UFreedom
  * Date : 2015 十一月 02
  * The help to CountDown
  */

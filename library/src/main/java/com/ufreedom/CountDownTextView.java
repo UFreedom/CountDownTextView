@@ -1,6 +1,7 @@
 package com.ufreedom;
 
 import android.content.Context;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
@@ -13,9 +14,6 @@ import java.util.Locale;
 
 /**
  * Custom TextView that implements a simple CountDown.
- * 
- * 
- * 
  * Author UFreedom
  */
 public class CountDownTextView extends TextView {
@@ -26,6 +24,7 @@ public class CountDownTextView extends TextView {
     public static final int TIME_SHOW_H_M_S = 20;
     public static final int TIME_SHOW_M_S = 30;
     public static final int TIME_SHOW_S = 40;
+    public long mCountDownInterval = 1000; 
     
     private static final String TIME_FORMAT_D_H_M_S = "%1$02d:%2$02d:%3$02d:%4$02d";
     private static final String TIME_FORMAT_H_M_S = "%1$02d:%2$02d:%3$02d";
@@ -41,12 +40,12 @@ public class CountDownTextView extends TextView {
     private boolean mRunning;
     private boolean mLogged;
     private String mFormat;
-    private String mTimeFormat; //DD:HH:MM:SS
     private Formatter mFormatter;
     private Locale mFormatterLocale;
     private Object[] mFormatterArgs = new Object[1];
     private StringBuilder mFormatBuilder;
     private int mTimeFlag;
+    private StringBuilder mRecycle = new StringBuilder(12);
 
 
     public CountDownTextView(Context context) {
@@ -56,6 +55,7 @@ public class CountDownTextView extends TextView {
 
     public CountDownTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
     
     private void init(){
@@ -114,30 +114,7 @@ public class CountDownTextView extends TextView {
         updateRunning();
     }
     
-    private void startCountDown(){
-
-        mCountDownHelper  = new CountDownHelper(scheduledTime, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                if (isAutoShowText) {
-                  //  updateText(millisUntilFinished);
-                    update(millisUntilFinished);
-                }
-                if (countDownCallback != null) {
-                    countDownCallback.onTick(CountDownTextView.this,millisUntilFinished);
-                }
-            }
-
-            @Override
-            public void onFinish() {
-                if (countDownCallback != null) {
-                    countDownCallback.onFinish(CountDownTextView.this);
-                }
-            }
-        };
-        mCountDownHelper.start();
-        
-    }
+    
 
     /**
      * is auto show time
@@ -172,7 +149,7 @@ public class CountDownTextView extends TextView {
      *
      * If the format string is null, or if you never call setFormat(), the
      * CountDownTextView will simply display the timer value in "MM:SS" or "HH:MM:SS"
-     * form.
+     * form which dependents on the time format {@link #setTimeFormat(int)}.
      *
      * @param format the format string.
      */
@@ -194,76 +171,37 @@ public class CountDownTextView extends TextView {
     
     
     private String getFormatTime(long now){
-        Object [] args ;
         long day = ElapsedTimeUtil.MILLISECONDS.toDays(now);
         long hour = ElapsedTimeUtil.MILLISECONDS.toHours(now);
         long minute = ElapsedTimeUtil.MILLISECONDS.toMinutes(now);
         long seconds = ElapsedTimeUtil.MILLISECONDS.toSeconds(now);
 
+        mRecycle.setLength(0);
+        Formatter f = new Formatter(mRecycle, Locale.getDefault());
+        String text;
         switch (mTimeFlag) {
             case TIME_SHOW_D_H_M_S:
-                mTimeFormat = TIME_FORMAT_D_H_M_S;
-                args = new Object[]{day,hour,minute,seconds};
+                text = f.format(TIME_FORMAT_D_H_M_S, day, hour, minute, seconds).toString();
                 break;
             case TIME_SHOW_H_M_S:
-                mTimeFormat = TIME_FORMAT_H_M_S;
-                args = new Object[]{hour,minute,seconds};
+                text = f.format(TIME_FORMAT_H_M_S, hour, minute, seconds).toString();
                 break;
 
             case TIME_SHOW_M_S:
-                mTimeFormat = TIME_FORMAT_M_S;
-                args = new Object[]{minute,seconds};
+                text =  f.format(TIME_FORMAT_M_S, minute, seconds).toString();
                 break;
 
             case TIME_SHOW_S:
-                mTimeFormat = TIME_FORMAT_S;
-                args = new Object[]{seconds};
+                text =  f.format(TIME_FORMAT_S, seconds).toString();
                 break;
             default:
-                mTimeFormat = TIME_FORMAT_H_M_S;
-                args = new Object[]{hour,minute,seconds};
+                text = f.format(TIME_FORMAT_H_M_S, seconds).toString();
                 break;
         }
         
-      return String.format(mTimeFormat,args).toString();        
+        return text;        
     }
     
-    private synchronized void update(long now){
-        long day = ElapsedTimeUtil.MILLISECONDS.toDays(now);
-        long hour = ElapsedTimeUtil.MILLISECONDS.toHours(now);
-        long minute = ElapsedTimeUtil.MILLISECONDS.toMinutes(now);
-        long seconds = ElapsedTimeUtil.MILLISECONDS.toSeconds(now);
-
-        String text;
-        
-        switch (mTimeFlag) {
-            case TIME_SHOW_D_H_M_S:
-                text = mFormatter.format(TIME_FORMAT_D_H_M_S,day,hour,minute,seconds).toString();
-                break;
-            case TIME_SHOW_H_M_S:
-                text = mFormatter.format(TIME_FORMAT_H_M_S,hour,minute,seconds).toString();
-
-                break;
-
-            case TIME_SHOW_M_S:
-                text = mFormatter.format(TIME_FORMAT_M_S,minute,seconds).toString();
-                break;
-
-            case TIME_SHOW_S:
-                text = mFormatter.format(TIME_FORMAT_S,seconds).toString();
-                break;
-            default:
-                text = mFormatter.format(TIME_FORMAT_H_M_S,seconds).toString();
-                break;
-        }
-        
-        if (mFormat != null){
-            mFormatterArgs[0] = text;
-            text =  mFormatter.format(mFormat,mFormatterArgs).toString();
-        }
-        
-        setText(text);
-    }
     
     private synchronized void updateText(long now) {
         String text = getFormatTime(now);
@@ -289,8 +227,12 @@ public class CountDownTextView extends TextView {
         setText(text);
     }
 
- 
-    
+
+    /**
+     * @param millisInFuture The number of millis in the future from the call 
+     *   to {@link #start()} until the countdown is done. The value should 
+     *  in the {@link SystemClock#elapsedRealtime} timebase
+     */
     public void setTimeInFuture(long millisInFuture){
         scheduledTime = millisInFuture;
     }
@@ -304,6 +246,63 @@ public class CountDownTextView extends TextView {
         countDownCallback = callback;
     }
 
+   
+
+    /**
+     * Sets the format string used for time display.The default display format is "HH:MM:SS"
+     * {@link #TIME_SHOW_D_H_M_S } the  format is "DD:HH:MM:SS" </p>
+     * {@link #TIME_SHOW_H_M_S } the  format is "HH:MM:SS" </p>
+     * {@link #TIME_SHOW_M_S } the  format is "MM:SS" </p>
+     * {@link #TIME_SHOW_S } the  format is "SS" </p>
+     * 
+     */
+    public void setTimeFormat(/*String mTimeFormat,*/int timeFlag) {
+      //  this.mTimeFormat = mTimeFormat;
+        mTimeFlag = timeFlag;
+    }
+
+    /**
+     * Return the interval along the way to refresh date
+     * @return
+     */
+    public long getCountDownInterval() {
+        return mCountDownInterval;
+    }
+
+    /**
+     * @param mCountDownInterval The interval along the way to refresh date ,default is 1 seconds
+     */
+    public void setCountDownInterval(long mCountDownInterval) {
+        this.mCountDownInterval = mCountDownInterval;
+    }
+    
+    
+
+    private void startCountDown(){
+
+        mCountDownHelper  = new CountDownHelper(scheduledTime, mCountDownInterval) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (isAutoShowText) {
+                    updateText(millisUntilFinished);
+                }
+                if (countDownCallback != null) {
+                    countDownCallback.onTick(CountDownTextView.this,millisUntilFinished);
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                if (countDownCallback != null) {
+                    countDownCallback.onFinish(CountDownTextView.this);
+                }
+            }
+        };
+        mCountDownHelper.start();
+
+    }
+    
+    
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
@@ -315,30 +314,4 @@ public class CountDownTextView extends TextView {
         super.onInitializeAccessibilityNodeInfo(info);
         info.setClassName(CountDownTextView.class.getName());
     }
-
-    /**
-     * Sets the format string used for time display.The default display format is "HH:MM:SS"
-     * 
-     */
-    public void setTimeFormat(/*String mTimeFormat,*/int timeFlag) {
-      //  this.mTimeFormat = mTimeFormat;
-        mTimeFlag = timeFlag;
-        initFormatter();        
-    }
-    
-    private void initFormatter(){
-        Locale loc = Locale.getDefault();
-        if (mFormatter == null || !loc.equals(mFormatterLocale)) {
-            mFormatterLocale = loc;
-            mFormatter = new Formatter(loc);
-        }
-    }
-
-    /**
-     * Returns the current time format string as set through {@link #setTimeFormat}.
-     */
-    private String getTimeFormat() {
-        return mTimeFormat;
-    }
-
 }
