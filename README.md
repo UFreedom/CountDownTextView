@@ -10,9 +10,9 @@ A simple countdown widget and easy to use.
 ------
 You can give it a start time in the `SystemClock.elapsedRealtime` timebase, and it counts down from that.
 
-By default it will not update the time value in text but gie a callback `onTick()`,If you want to auto display the current timer value ,Please use `setAutoShowText(true)`.
+By default it will not update the time value in text but give a callback `onTick()`,If you want to  display the current timer value ,Please use `setAutoDisplayText(true)`.
 
-By default the teimer value is in the form "MM:SS" or "HH:MM:SS", you can use setTimeFormat() to use Other  format :
+By default the display timer value is in the form "MM:SS" or "HH:MM:SS", you can use setTimeFormat() to use other  format :
 
 | Time Format   | Display  |
 | --------   |  ----  |
