@@ -24,10 +24,10 @@ By default the display timer value is in the form "MM:SS" or "HH:MM:SS", you can
 
 
 ``` java
-long schedlueTime = SystemClock.elapsedRealtime + 1000 * 60 * 20;//20 minutes
+long timeInFuture = SystemClock.elapsedRealtime + 1000 * 60 * 20;//20 minutes
 
 CountDownTextView countDownTextView = findViewById(R.id.countDownTextView)
-countDownTextView.setTimeInFuture(schedlueTime);
+countDownTextView.setTimeInFuture(timeInFuture);
 countDownTextView.setAutoShowText(true);
 countDownTextView.start();
 
