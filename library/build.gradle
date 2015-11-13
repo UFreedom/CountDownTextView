@@ -32,8 +32,8 @@ dependencies {
 }
 
 
-def siteUrl = 'https://github.com/UFreedom/CountDownTextView'   // 项目的主页
-def gitUrl = 'git@github.com:UFreedom/CountDownTextView.git'   // Git仓库的url
+def siteUrl = 'https://github.com/UFreedom/CountDownTextView' 
+def gitUrl = 'git@github.com:UFreedom/CountDownTextView.git'   
 group = "com.ufreedom.countdowntextview"
 
 install {
@@ -43,7 +43,7 @@ install {
             project {
                 packaging 'aar'
                 // Add your description here
-                name 'A simple countdown widget and easy to use.'     //项目的描述 你可以多写一点
+                name 'A simple countdown widget and easy to use.'  
                 url siteUrl
                 // Set your license
                 licenses {
@@ -54,7 +54,7 @@ install {
                 }
                 developers {
                     developer {
-                        id 'library'        //填写的一些基本信息
+                        id 'library'     
                         name 'UFreedom'
                         email 'sunfreedomsun@gmail.com'
                     }
@@ -94,7 +94,7 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "maven"
-        name = "CountDownTextView"    //发布到JCenter上的项目名字
+        name = "CountDownTextView"    
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]
