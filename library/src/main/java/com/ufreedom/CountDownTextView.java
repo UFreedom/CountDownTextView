@@ -117,8 +117,8 @@ public class CountDownTextView extends TextView {
     
 
     /**
-     * is auto show time
-     * @param isAutoShowText
+     * 
+     * @param isAutoShowText if true,it will display the current timer value
      */
     public void setAutoDisplayText(boolean isAutoShowText) {
         this.isAutoShowText = isAutoShowText;
@@ -131,12 +131,14 @@ public class CountDownTextView extends TextView {
 
         /**
          * Callback fired on regular interval.
+         * @param countDownTextView The CountDownText instance.
          * @param millisUntilFinished The amount of time until finished.
          */
         void onTick(CountDownTextView countDownTextView,long millisUntilFinished);
 
         /**
          * Callback fired when the time is up.
+         * @param countDownTextView The CountDownText instance.
          */
         void onFinish(CountDownTextView countDownTextView);
         
@@ -159,15 +161,6 @@ public class CountDownTextView extends TextView {
             mFormatBuilder = new StringBuilder(format.length() * 2);
         }
     }
-
-    /**
-     * Returns the current format string as set through {@link #setFormat}.
-     */
-    public String getFormat() {
-        return mFormat;
-    }
-
-
     
     
     private String getFormatTime(long now){
@@ -238,10 +231,6 @@ public class CountDownTextView extends TextView {
     }
     
     
-    /**
-     * CountDown callback
-     * @param callback
-     */
     public void addCountDownCallback(CountDownCallback callback) {
         countDownCallback = callback;
     }
@@ -250,11 +239,12 @@ public class CountDownTextView extends TextView {
 
     /**
      * Sets the format string used for time display.The default display format is "HH:MM:SS"
-     * {@link #TIME_SHOW_D_H_M_S } the  format is "DD:HH:MM:SS" </p>
-     * {@link #TIME_SHOW_H_M_S } the  format is "HH:MM:SS" </p>
-     * {@link #TIME_SHOW_M_S } the  format is "MM:SS" </p>
-     * {@link #TIME_SHOW_S } the  format is "SS" </p>
+     * <p> {@link #TIME_SHOW_D_H_M_S } the  format is "DD:HH:MM:SS" </p>
+     * <p> {@link #TIME_SHOW_H_M_S } the  format is "HH:MM:SS" </p>
+     * <p> {@link #TIME_SHOW_M_S } the  format is "MM:SS" </p>
+     * <p> {@link #TIME_SHOW_S } the  format is "SS" </p>
      * 
+     * @param timeFlag  the display time flag 
      */
     public void setTimeFormat(/*String mTimeFormat,*/int timeFlag) {
       //  this.mTimeFormat = mTimeFormat;
@@ -262,8 +252,7 @@ public class CountDownTextView extends TextView {
     }
 
     /**
-     * Return the interval along the way to refresh date
-     * @return
+     * @return Return the interval along the way to refresh date
      */
     public long getCountDownInterval() {
         return mCountDownInterval;

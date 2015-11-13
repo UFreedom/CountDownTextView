@@ -71,14 +71,12 @@ public abstract  class CountDownHelper  {
     /**
      * Start the countdown.
      */
-    public synchronized final CountDownHelper start() {
+    public synchronized final void start() {
         mCancelled = false;
         if (mMillisInFuture <= 0L) {
             onFinish();
-            return this;
         }
         mHandler.sendMessage(mHandler.obtainMessage(UPDATE_TIME));
-        return this;
     }
     
     
