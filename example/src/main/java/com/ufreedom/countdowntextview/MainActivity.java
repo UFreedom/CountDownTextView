@@ -36,11 +36,9 @@ public class MainActivity extends AppCompatActivity {
         List<String> pics = Arrays.asList(Analog.getPics());
                 
         for (String pic: pics){
-            AnalogData analogData = new AnalogData();
-            analogData.setPic(pic);
-            analogData.setScheduleTime(getRandomTime());
-            analogDatas.add(analogData);
+            analogDatas.add(new AnalogData(pic, getRandomTime()));
         }
+        
         BaseItemDecoration baseItemDecoration = new BaseItemDecoration(32,0,16,1);
         recyclerView.addItemDecoration(baseItemDecoration);
 

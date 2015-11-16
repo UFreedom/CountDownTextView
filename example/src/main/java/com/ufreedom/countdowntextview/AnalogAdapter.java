@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import java.util.List;
 
 /**
- * Author UFreedom
- * Date : 2015 十月 29
+ * Model on RecyclerView
+ *
+ * Author UFreedom, DChuan
+ * Date : 16/11/2015
  */
 public class AnalogAdapter extends RecyclerView.Adapter<AnalogHolder> {
 
