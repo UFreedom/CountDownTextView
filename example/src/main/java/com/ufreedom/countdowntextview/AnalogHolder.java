@@ -38,7 +38,7 @@ public class AnalogHolder extends BaseViewHolder<AnalogData> {
                 .setAutoPlayAnimations(true)
                 .build();
         simpleDraweeView.setController(draweeController);
-        countDownTextView.setTimeInFuture(object.schedlueTime);
+        countDownTextView.setTimeInFuture(object.scheduleTime);
         countDownTextView.setAutoDisplayText(true);
         countDownTextView.start();
         countDownTextView.addCountDownCallback(new CountDownTextView.CountDownCallback() {

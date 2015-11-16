@@ -8,6 +8,6 @@ public class AnalogData {
     
     public String pic;
     
-    public long schedlueTime;
+    public long scheduleTime;
     
 }

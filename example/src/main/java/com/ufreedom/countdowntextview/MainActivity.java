@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         for (String pic: pics){
             AnalogData  analogData = new AnalogData();
             analogData.pic = pic;
-            analogData.schedlueTime = getRandomTime();
+            analogData.scheduleTime = getRandomTime();
             analogDatas.add(analogData);
         }
         BaseItemDecoration baseItemDecoration = new BaseItemDecoration(32,0,16,1);
