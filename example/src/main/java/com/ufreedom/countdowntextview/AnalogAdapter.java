@@ -18,11 +18,11 @@ public class AnalogAdapter extends RecyclerView.Adapter<AnalogHolder> {
     public AnalogAdapter(List<AnalogData> analogDatas) {
         datas = analogDatas;
     }
-    
 
     @Override
     public AnalogHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_yummy_pic, parent, false);
+        View view =
+                LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_yummy_pic, parent, false);
         return new AnalogHolder(view);
     }
 

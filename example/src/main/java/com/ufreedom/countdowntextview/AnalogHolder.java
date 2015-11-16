@@ -53,6 +53,5 @@ public class AnalogHolder extends BaseViewHolder<AnalogData> {
             }
         });
         
-        
     }
 }

@@ -32,11 +32,11 @@ public class MainActivity extends AppCompatActivity {
         // Set RecyclerView
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        List<AnalogData> analogDatas =  new ArrayList<>();
+        List<AnalogData> analogDatas = new ArrayList<>();
         List<String> pics = Arrays.asList(Analog.getPics());
                 
         for (String pic: pics){
-            AnalogData  analogData = new AnalogData();
+            AnalogData analogData = new AnalogData();
             analogData.pic = pic;
             analogData.scheduleTime = getRandomTime();
             analogDatas.add(analogData);
