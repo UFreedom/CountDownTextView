@@ -29,7 +29,7 @@ public class AnalogHolder extends BaseViewHolder<AnalogData> {
     @Override
     public void onBindView(AnalogData object) {
         ImageRequest imageRequest =
-                ImageRequestBuilder.newBuilderWithSource(Uri.parse(object.pic))
+                ImageRequestBuilder.newBuilderWithSource(Uri.parse(object.getPic()))
                         .setResizeOptions(new ResizeOptions(300, 300))
                         .build();
         DraweeController draweeController = Fresco.newDraweeControllerBuilder()
@@ -38,7 +38,7 @@ public class AnalogHolder extends BaseViewHolder<AnalogData> {
                 .setAutoPlayAnimations(true)
                 .build();
         simpleDraweeView.setController(draweeController);
-        countDownTextView.setTimeInFuture(object.scheduleTime);
+        countDownTextView.setTimeInFuture(object.getScheduleTime());
         countDownTextView.setAutoDisplayText(true);
         countDownTextView.start();
         countDownTextView.addCountDownCallback(new CountDownTextView.CountDownCallback() {
