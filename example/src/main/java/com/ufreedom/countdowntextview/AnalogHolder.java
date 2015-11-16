@@ -28,6 +28,8 @@ public class AnalogHolder extends RecyclerView.ViewHolder {
     }
 
     public void onBindView(AnalogData object) {
+
+        // Set SimpleDraweeView
         ImageRequest imageRequest =
                 ImageRequestBuilder.newBuilderWithSource(Uri.parse(object.getPic()))
                         .setResizeOptions(new ResizeOptions(300, 300))
@@ -38,6 +40,8 @@ public class AnalogHolder extends RecyclerView.ViewHolder {
                 .setAutoPlayAnimations(true)
                 .build();
         simpleDraweeView.setController(draweeController);
+
+        // Set CountDownTextView
         countDownTextView.setTimeInFuture(object.getScheduleTime());
         countDownTextView.setAutoDisplayText(true);
         countDownTextView.start();
