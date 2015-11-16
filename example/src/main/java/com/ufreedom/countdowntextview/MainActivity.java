@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         for (String pic: pics){
             analogDatas.add(new AnalogData(pic, getRandomTime()));
         }
-        
+
         BaseItemDecoration baseItemDecoration = new BaseItemDecoration(32,0,16,1);
         recyclerView.addItemDecoration(baseItemDecoration);
 
