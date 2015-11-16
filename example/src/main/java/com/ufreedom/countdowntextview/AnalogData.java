@@ -12,9 +12,12 @@ public class AnalogData {
     // Start time to be shown on CountDownTextView
     private long scheduleTime;
 
-    public AnalogData(String pic, long scheduleTime) {
+    private int timeFormat;
+
+    public AnalogData(String pic, long scheduleTime, int timeFormat) {
         this.scheduleTime = scheduleTime;
         this.pic = pic;
+        this.timeFormat = timeFormat;
     }
 
     public String getPic() {
@@ -31,5 +34,13 @@ public class AnalogData {
 
     public void setScheduleTime(long scheduleTime) {
         this.scheduleTime = scheduleTime;
+    }
+
+    public int getTimeFormat() {
+        return timeFormat;
+    }
+
+    public void setTimeFormat(int timeFormat) {
+        this.timeFormat = timeFormat;
     }
 }

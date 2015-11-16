@@ -44,8 +44,10 @@ public class AnalogHolder extends RecyclerView.ViewHolder {
         // Set CountDownTextView
         countDownTextView.setTimeInFuture(object.getScheduleTime());
         countDownTextView.setAutoDisplayText(true);
+        countDownTextView.setTimeFormat(object.getTimeFormat());
         countDownTextView.start();
         countDownTextView.addCountDownCallback(new CountDownTextView.CountDownCallback() {
+
             @Override
             public void onTick(CountDownTextView countDownTextView, long millisUntilFinished) {
                 
