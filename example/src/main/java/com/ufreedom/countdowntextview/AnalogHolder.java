@@ -55,7 +55,7 @@ public class AnalogHolder extends RecyclerView.ViewHolder {
 
             @Override
             public void onFinish(CountDownTextView countDownTextView) {
-                countDownTextView.setText("00:00:00");
+                countDownTextView.setText("Time Over");
             }
         });
         
