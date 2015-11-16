@@ -47,7 +47,6 @@ public class CountDownTextView extends TextView {
     private int mTimeFlag;
     private StringBuilder mRecycle = new StringBuilder(12);
 
-
     public CountDownTextView(Context context) {
         super(context);
         init();
@@ -82,7 +81,6 @@ public class CountDownTextView extends TextView {
         updateRunning();
     }
 
-
     private void updateRunning() {
         boolean running = mVisible && mStarted;
         if (running != mRunning) {
@@ -94,7 +92,6 @@ public class CountDownTextView extends TextView {
             mRunning = running;
         }
     }
-
 
     /**
      * Start the countdown
@@ -113,8 +110,6 @@ public class CountDownTextView extends TextView {
         mStarted = false;
         updateRunning();
     }
-    
-    
 
     /**
      * 
@@ -123,9 +118,6 @@ public class CountDownTextView extends TextView {
     public void setAutoDisplayText(boolean isAutoShowText) {
         this.isAutoShowText = isAutoShowText;
     }
-
-
-    
     
     public interface CountDownCallback {
 
@@ -161,8 +153,7 @@ public class CountDownTextView extends TextView {
             mFormatBuilder = new StringBuilder(format.length() * 2);
         }
     }
-    
-    
+
     private String getFormatTime(long now){
         long day = ElapsedTimeUtil.MILLISECONDS.toDays(now);
         long hour = ElapsedTimeUtil.MILLISECONDS.toHours(now);
@@ -220,7 +211,6 @@ public class CountDownTextView extends TextView {
         setText(text);
     }
 
-
     /**
      * @param millisInFuture The number of millis in the future from the call 
      *   to {@link #start()} until the countdown is done. The value should 
@@ -230,12 +220,9 @@ public class CountDownTextView extends TextView {
         scheduledTime = millisInFuture;
     }
     
-    
     public void addCountDownCallback(CountDownCallback callback) {
         countDownCallback = callback;
     }
-
-   
 
     /**
      * Sets the format string used for time display.The default display format is "HH:MM:SS"
@@ -264,8 +251,6 @@ public class CountDownTextView extends TextView {
     public void setCountDownInterval(long mCountDownInterval) {
         this.mCountDownInterval = mCountDownInterval;
     }
-    
-    
 
     private void startCountDown(){
 
@@ -290,8 +275,7 @@ public class CountDownTextView extends TextView {
         mCountDownHelper.start();
 
     }
-    
-    
+
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
