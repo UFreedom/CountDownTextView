@@ -18,18 +18,18 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private AnalogAdapter analogAdapter;
     private Random random;
-            
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        random = new Random();
+
+        // Set Tool Bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
-        
 
+        // Set RecyclerView
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<AnalogData> analogDatas =  new ArrayList<>();
@@ -48,12 +48,21 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(analogAdapter);
 
     }
-    
+
+    /**
+     * Generates random time
+     * @return
+     */
     private long getRandomTime(){
-        
+
+        if(random == null) {
+            random = new Random();
+        }
+
         long seconds = 1000 * (random.nextInt(10) + 1);
         long minute = 1000 * 60 * (random.nextInt(10) + 1); 
         long hour = 1000 * 60 * 60 * (/*random.nextInt(10)*/10 + 1);
+
         return SystemClock.elapsedRealtime() + hour + minute + seconds;
     }
     
