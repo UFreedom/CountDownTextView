@@ -8,6 +8,12 @@ A simple countdown widget and easy to use.
 
 ###Usage
 ------
+
+```` java
+    compile 'com.ufreedom.countdowntextview:library:0.1.0'
+````
+
+
 You can give it a start time in the `SystemClock.elapsedRealtime` timebase, and it counts down from that.
 
 By default it will not update the time value in text but give a callback `onTick()`,If you want to  display the current timer value ,Please use `setAutoDisplayText(true)`.
