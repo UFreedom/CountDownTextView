@@ -12,9 +12,7 @@ import android.os.SystemClock;
  * Date : 2015 十一月 02
  * The help to CountDown
  */
-public abstract  class CountDownHelper  {
-
-    
+public abstract class CountDownHelper  {
 
     /**
      * Millis since epoch when alarm should stop.
@@ -25,16 +23,13 @@ public abstract  class CountDownHelper  {
      * The interval in millis that the user receives callbacks
      */
     private final long mCountdownInterval;
-    
 
     /**
      * boolean representing if the timer was cancelled
      */
     private boolean mCancelled = false;
 
-
     public static final int UPDATE_TIME = 0;
-
 
     /**
      * @param millisInFuture The number of millis in the future from the call
@@ -59,7 +54,6 @@ public abstract  class CountDownHelper  {
      */
     public abstract void onFinish();
 
-
     /**
      * Cancel the countdown.
      */
@@ -78,7 +72,6 @@ public abstract  class CountDownHelper  {
         }
         mHandler.sendMessage(mHandler.obtainMessage(UPDATE_TIME));
     }
-    
     
     // handles counting down
     private Handler mHandler = new Handler() {
@@ -139,6 +132,5 @@ public abstract  class CountDownHelper  {
     private long getTimeLeft(long reqMilliseconds){
         return mTimeMode == TIME_ABSOLUTE ? getTimeLeftInAbsolute(reqMilliseconds) : getTimeLeftInRelative(reqMilliseconds);
     }*/
-    
-    
+
 }

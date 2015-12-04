@@ -1,6 +1,7 @@
 package com.ufreedom.countdowntextview;
 
 import android.net.Uri;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -15,7 +16,7 @@ import com.ufreedom.CountDownTextView;
  * Author UFreedom
  * Date : 2015 十月 29
  */
-public class AnalogHolder extends BaseViewHolder<AnalogData> {
+public class AnalogHolder extends RecyclerView.ViewHolder {
 
     private SimpleDraweeView simpleDraweeView;
     private CountDownTextView countDownTextView;
@@ -26,10 +27,11 @@ public class AnalogHolder extends BaseViewHolder<AnalogData> {
         countDownTextView = (CountDownTextView) itemView.findViewById(R.id.countDownTextView);
     }
 
-    @Override
     public void onBindView(AnalogData object) {
+
+        // Set SimpleDraweeView
         ImageRequest imageRequest =
-                ImageRequestBuilder.newBuilderWithSource(Uri.parse(object.pic))
+                ImageRequestBuilder.newBuilderWithSource(Uri.parse(object.getPic()))
                         .setResizeOptions(new ResizeOptions(300, 300))
                         .build();
         DraweeController draweeController = Fresco.newDraweeControllerBuilder()
@@ -38,10 +40,14 @@ public class AnalogHolder extends BaseViewHolder<AnalogData> {
                 .setAutoPlayAnimations(true)
                 .build();
         simpleDraweeView.setController(draweeController);
-        countDownTextView.setTimeInFuture(object.schedlueTime);
+
+        // Set CountDownTextView
+        countDownTextView.setTimeInFuture(object.getScheduleTime());
         countDownTextView.setAutoDisplayText(true);
+        countDownTextView.setTimeFormat(object.getTimeFormat());
         countDownTextView.start();
         countDownTextView.addCountDownCallback(new CountDownTextView.CountDownCallback() {
+
             @Override
             public void onTick(CountDownTextView countDownTextView, long millisUntilFinished) {
                 
@@ -49,10 +55,9 @@ public class AnalogHolder extends BaseViewHolder<AnalogData> {
 
             @Override
             public void onFinish(CountDownTextView countDownTextView) {
-                countDownTextView.setText("00:00:00");
+                countDownTextView.setText("Time Over");
             }
         });
-        
         
     }
 }
